@@ -8,7 +8,34 @@
 </head>
 <body>
 
-<%= yield %>
+	<header class="navbar navbar-static-top navbar-inverse" id="top">
+		<div class="container">
+
+			<div class="navbar-header">
+				<%= link_to image_tag("pokedex_logo.jpeg"), home_path, class: 'navbar-brand' %>
+			</div>
+			<nav id="bs-navbar" class="navbar-collapse collapse in">
+				<ul class="nav navbar-nav navbar-right">
+					<li><%= link_to "Home", home_path %></li>
+					<li><%= link_to "About", about_path %></li>
+					<li><%= link_to "Intro to Competitive Battling", battling_intro_path %></li>
+				</ul>
+			</nav>
+
+		</div>
+	</header>
+
+	<div class="container">
+		<%= yield %>
+	</div>
+
+	<footer class="bs-docs-footer">
+		<div class="container">
+			<%= link_to 'About the Creator', bio_path %>
+		</div>
+	</footer>
+
+	
 
 </body>
 </html>
