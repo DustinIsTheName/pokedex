@@ -10,4 +10,7 @@ class StaticPagesController < ApplicationController
 
   def bio
   end
+
+  def minesweeper
+  end
 end

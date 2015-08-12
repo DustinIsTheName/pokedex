@@ -1,3 +1,114 @@
 // Place all the styles related to the StaticPages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.status-bar {
+	width: 960px;
+	height: 100px;
+	.status-cell {
+		width: 33.3333333%;
+		float: left;
+		text-align: center;
+
+		.reset-fire {
+			display: inline-block;
+			width: 20px;
+			height: 20px;
+		  background: #ccc;
+		  border: 5px solid #ddd;
+		  border-right-color: #bbb;
+		  border-bottom-color: #bbb;
+		  &:hover {
+			  border: 5px solid #ddd;
+			  border-left-color: #bbb;
+			  border-top-color: #bbb;
+		  }
+		}
+		.flag-trigger {
+			display: inline-block;
+			width: 50px;
+			height: 50px;
+		  background: image-url('minesweeper-flag.png');
+		  background-size: 130%;
+      background-position: center 10px;
+		  border: 5px solid #ddd;
+		  border-right-color: #bbb;
+		  border-bottom-color: #bbb;
+		  &.pushed {
+		    border: 5px solid #ddd;
+			  border-left-color: #bbb;
+			  border-top-color: #bbb;
+			  background-position: center -4px;
+		  }
+		}
+		.mine-count {
+			display: inline-block;
+			font-size: 20px;
+			color: #0000FF;
+		}
+	}
+}
+
+
+
+
+.mine-field {
+	width: 960px;
+  height: 960px;
+  background: #ccc;
+  border: 5px solid #ddd;
+  border-right-color: #bbb;
+  border-bottom-color: #bbb;
+  box-sizing: border-box;
+  margin-bottom: 50px;
+
+  .mine-field-inner {
+  	width: 98%;
+  	height: 98%;
+  	margin: 1%;
+  	box-sizing: border-box;
+		border: 5px solid #ddd;
+		border-left-color: #bbb;
+		border-top-color: #bbb;
+		background: #ddd;
+
+		.mine {
+	  	width: 10%;
+	  	height: 10%;
+	  	background: #ccc;
+	  	box-sizing: border-box;
+			border: 5px solid #ddd;
+			border-right-color: #bbb;
+			border-bottom-color: #bbb;
+			float: left;
+			font-weight: bold;
+	    font-size: 50px;
+	    text-align: center;
+	    padding-top: 27px;
+			&:hover {
+				border: 5px solid #ddd;
+				border-left-color: #bbb;
+				border-top-color: #bbb;
+			}
+			&.set-off {border: 1px solid #bbb;}
+			&.boom {
+				background: image-url("cartoonexplosion.png");
+		    background-size: 112%;
+		    background-position: center center;
+			}
+			&.flag {
+				background: image-url("minesweeper-flag.png");
+		    background-size: 100%;
+		    background-position: center center;
+			}
+			&.one {color: #0000ff;}
+			&.two {color: #008800;}
+			&.three {color: #ff0000;}
+			&.four {color: #030C7E;}
+			&.five {color: #7F040A;}
+			&.six {color: #118080;}
+			&.seven {color: #000000;}
+			&.eight {color: #808080;}
+		}
+  }
+}
