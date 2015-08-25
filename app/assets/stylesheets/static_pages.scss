@@ -2,6 +2,27 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.custom-field-form {
+	position: absolute;
+	top: 0;
+	right: 150px;
+	width: 135px;
+	.input-row{
+		display: block;
+		margin: 0 0 10px;
+		label {
+			display: inline-block;
+			margin: 4px 0 0;
+		}
+		input[type="number"] {
+			display: inline-block;
+			width: 35px;
+			margin: 0;
+			float: right;
+		}
+	}
+}
+
 .status-bar {
 	width: 960px;
 	height: 100px;
@@ -49,9 +70,6 @@
 	}
 }
 
-
-
-
 .mine-field {
 	width: 960px;
   height: 960px;
@@ -73,34 +91,15 @@
 		background: #ddd;
 
 		.mine {
-	  	width: 10%;
-	  	height: 10%;
+	  	padding: 5%;
+	  	position: relative;
 	  	background: #ccc;
 	  	box-sizing: border-box;
-			border: 5px solid #ddd;
-			border-right-color: #bbb;
-			border-bottom-color: #bbb;
+
 			float: left;
 			font-weight: bold;
 	    font-size: 50px;
 	    text-align: center;
-	    padding-top: 32px;
-			&:hover {
-				border: 5px solid #ddd;
-				border-left-color: #bbb;
-				border-top-color: #bbb;
-			}
-			&.set-off {border: 1px solid #bbb;}
-			&.boom {
-				background: image-url("cartoonexplosion.png");
-		    background-size: 112%;
-		    background-position: center center;
-			}
-			&.flag {
-				background: image-url("minesweeper-flag.png");
-		    background-size: 100%;
-		    background-position: center center;
-			}
 			&.one {color: #0000ff;}
 			&.two {color: #008800;}
 			&.three {color: #ff0000;}
@@ -109,6 +108,41 @@
 			&.six {color: #118080;}
 			&.seven {color: #000000;}
 			&.eight {color: #808080;}
+			.inner {
+				width: 100%;
+				height: 100%;
+				padding-top: 34px;
+				box-sizing: border-box;
+				position: absolute;
+				top: 0;
+				left: 0;
+				border: 5px solid #ddd;
+				border-right-color: #bbb;
+				border-bottom-color: #bbb;
+				&:hover {
+					border: 5px solid #ddd;
+					border-left-color: #bbb;
+					border-top-color: #bbb;
+				}
+				//top: 50%;
+				//left: 50%;
+				//-ms-transform: translate(-50%,-50%); /* IE 9 */
+		   	//-webkit-transform: translate(-50%,-50%); /* Safari */
+		    //transform: translate(-50%,-50%);
+			}
+
+			&.set-off .inner {border: 1px solid #bbb;}
+			&.boom .inner {
+				background: image-url("cartoonexplosion.png");
+		    background-size: 112%;
+		    background-position: center center;
+			}
+			&.flag .inner {
+				background: image-url("minesweeper-flag.png");
+		    background-size: 100%;
+		    background-position: center center;
+
+			}
 		}
   }
 }

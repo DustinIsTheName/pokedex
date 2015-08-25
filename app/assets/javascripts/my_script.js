@@ -109,7 +109,10 @@
 		var victoryFire = 'play';
 		var flagTrigger = false;
 		var firstClick = true;
-		var minesLeft = 15;
+		var rows = 10;
+		var columns = 10;
+		var mines = 15;
+		var minesLeft = mines;
 		var column1 = [0,0,0,0,0,0,0,0,0,0];
 		var column2 = [0,0,0,0,0,0,0,0,0,0];
 		var column3 = [0,0,0,0,0,0,0,0,0,0];
@@ -134,26 +137,26 @@
 
 		function setMines() { //determine the mine placement
 			var count = 0; //counts # of mines placed
-			for (i = 0; i <= 9; i++) {
-				for (t = 0; t <= 9; t++) {
+			for (i = 0; i < rows; i++) {
+				for (t = 0; t < columns; t++) {
 					mineField[i][t] = 0; //resets the field
 				}
 			}
-			while (count <=14) { //adds 15 random mines
-				i = Math.floor(Math.random()*10); 
-				t = Math.floor(Math.random()*10);
+			while (count < mines) { //adds 15 random mines
+				i = Math.floor(Math.random()*rows); 
+				t = Math.floor(Math.random()*columns);
 				if (mineField[i][t] != -1) {
 					mineField[i][t] = -1;
 					count++;
 				}
 			}
-			for (i = 0; i <= 9; i++) { //assgins numbers to square according to surrounding mines
-				for (t = 0; t <= 9; t++) {
+			for (i = 0; i < rows; i++) { //assgins numbers to square according to surrounding mines
+				for (t = 0; t < columns; t++) {
 					var countAgain = 0;
 					if (mineField[i][t] != -1) {
 						for (var a = -1; a <=1; a++) {
 							for (var b = -1; b <= 1; b++) {
-								if((i+a)>=0 && (i+a)<=9 && (t+b)>=0 && (t+b)<=9) {
+								if((i+a)>=0 && (i+a)<rows && (t+b)>=0 && (t+b)<columns) {
 									if (mineField[i+a][t+b] === -1) {
 										countAgain++;
 									}
@@ -165,8 +168,15 @@
 				}
 			}
 		} //end setMines()
-
 		setMines();
+
+		$('#changeField').click(function(e) {
+			e.preventDefault;
+			rows = $('#rows').val();
+			columns = $('#columns').val();
+			mines = $('#mines').val();
+			resetFire();
+		});
 
 		$('.mine').click(function() {
 			var thisMine = $(this);
@@ -174,9 +184,9 @@
 			if (victoryFire === 'play') {
 				if (flagTrigger === false && thisMine.hasClass('flag') === false) {									
 					var getMinePosition = function() {
-						for (i = 0; i <= 9; i++) {
-							for (t = 0; t <= 9; t++) {
-								if (thisMine.is('.mine:nth-child('+((i+1)+(t*10))+')')) {
+						for (i = 0; i < rows; i++) {
+							for (t = 0; t < columns; t++) {
+								if (thisMine.is('.mine:nth-child('+((i+1)+(t*columns))+')')) {
 									return [i,t];
 								}
 							}
@@ -194,49 +204,49 @@
 							switch (mineField[x][y]) {
 								case -1:
 									victoryLost = true;						
-									for (i = 0; i <= 9; i++) {
-										for (t = 0; t <= 9; t++) {
+									for (i = 0; i < rows; i++) {
+										for (t = 0; t < columns; t++) {
 											if (mineField[i][t] === -1) {
-												$('.mine:nth-child('+((i+1)+(t*10))+')').addClass('boom');
+												$('.mine:nth-child('+((i+1)+(t*columns))+')').addClass('boom');
 											}
 										}
 									}
 									//$('.boom').css('background-color','red');
 									break;
 								case 0:
-									$('.mine:nth-child('+((x+1)+(y*10))+')').addClass('set-off');
+									$('.mine:nth-child('+((x+1)+(y*columns))+')').addClass('set-off');
 									mineField[x][y] = -2;
 									for (var a = -1; a <= 1; a++) {
 										for (var b = -1; b <= 1; b++) {
-											if ((x+a)>=0 && (x+a)<=9 && (y+b)>=0 && (y+b)<=9) {
+											if ((x+a)>=0 && (x+a)<rows && (y+b)>=0 && (y+b)<columns) {
 												setOff(x+a,y+b); //sets off all surrounding spaces
 											}
 										}
 									}
 									break;
 								case 1:
-									$('.mine:nth-child('+((x+1)+(y*10))+')').addClass('one set-off').text('1');
+									$('.mine:nth-child('+((x+1)+(y*columns))+')').addClass('one set-off').children('.inner').text('1');
 									break;
 								case 2:
-									$('.mine:nth-child('+((x+1)+(y*10))+')').addClass('two set-off').text('2');
+									$('.mine:nth-child('+((x+1)+(y*columns))+')').addClass('two set-off').children('.inner').text('2');
 									break;
 								case 3:
-									$('.mine:nth-child('+((x+1)+(y*10))+')').addClass('three set-off').text('3');
+									$('.mine:nth-child('+((x+1)+(y*columns))+')').addClass('three set-off').children('.inner').text('3');
 									break;
 								case 4:
-									$('.mine:nth-child('+((x+1)+(y*10))+')').addClass('four set-off').text('4');
+									$('.mine:nth-child('+((x+1)+(y*columns))+')').addClass('four set-off').children('.inner').text('4');
 									break;
 								case 5:
-									$('.mine:nth-child('+((x+1)+(y*10))+')').addClass('five set-off').text('5');
+									$('.mine:nth-child('+((x+1)+(y*columns))+')').addClass('five set-off').children('.inner').text('5');
 									break;
 								case 6:
-									$('.mine:nth-child('+((x+1)+(y*10))+')').addClass('six set-off').text('6');
+									$('.mine:nth-child('+((x+1)+(y*columns))+')').addClass('six set-off').children('.inner').text('6');
 									break;
 								case 7:
-									$('.mine:nth-child('+((x+1)+(y*10))+')').addClass('seven set-off').text('7');
+									$('.mine:nth-child('+((x+1)+(y*columns))+')').addClass('seven set-off').children('.inner').text('7');
 									break;
 								case 8:
-									$('.mine:nth-child('+((x+1)+(y*10))+')').addClass('eight set-off').text('8');
+									$('.mine:nth-child('+((x+1)+(y*columns))+')').addClass('eight set-off').children('.inner').text('8');
 									break;
 								default:
 									break;
@@ -265,19 +275,20 @@
 			}
 			var checkForVictory = function() {
 				var victoryCount = 0;
-				for(i = 0; i <= 9; i++) {
-					for (t = 0; t <= 9; t++) {
+				for(i = 0; i < rows; i++) {
+					for (t = 0; t < columns; t++) {
 						if (mineField[i][t] === -2) {
 							victoryCount++
 						}
 					}
 				}
-				if (victoryCount >= 85) {
+				if (victoryCount >= rows*columns-mines) {
 					victoryFire = "won";
-					for(i = 0; i <= 9; i++) {
-						for (t = 0; t <= 9; t++) {
+					$('.mine-count').text('It\'s safe now!');
+					for(i = 0; i < rows; i++) {
+						for (t = 0; t < columns; t++) {
 							if (mineField[i][t] === -1) {
-								$('.mine:nth-child('+((i+1)+(t*10))+')').css('background-color',"#00f700");
+								$('.mine:nth-child('+((i+1)+(t*columns))+')').css('background-color',"#00f700");
 							}
 						}
 					}
@@ -287,16 +298,17 @@
 				checkForVictory();
 			}
 		}); //end click on $('.mine')
-		$('.reset-fire').click(function() {
+		function resetFire() {
 			victoryFire = 'play';
 			flagTrigger = false;
-			minesLeft = 15;
-			$('.mine-count').text('15 REMAIN');
+			minesLeft = mines;
+			$('.mine-count').text(mines+' REMAIN');
 			$('.flag-trigger').removeClass('pushed');
-			$('.mine').removeClass('set-off one two three four five six seven eight boom flag').text('').css('background-color','#ccc');
+			$('.mine').removeClass('set-off one two three four five six seven eight boom flag').css('background-color','#ccc').children('.inner').text('');
 			firstClick = true;
 			setMines();
-		}); // end click on $('.reset-fire')
+		}
+		$('.reset-fire').click(resetFire); // end click on $('.reset-fire')
 		$('.flag-trigger').click(function() {
 			if (victoryFire === 'play') {
 				$('.flag-trigger').toggleClass('pushed');
