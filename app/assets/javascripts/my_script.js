@@ -247,7 +247,8 @@
 						if ($('.mine:nth-child('+((x+1)+(y*columns))+')').hasClass('flag') === false) {
 							switch (mineField[x][y]) {
 								case -1:
-									victoryLost = true;						
+									victoryLost = true;
+									$('.mine-count').text('It all goes boom');					
 									for (i = 0; i < columns; i++) {
 										for (t = 0; t < rows; t++) {
 											if (mineField[i][t] === -1) {
