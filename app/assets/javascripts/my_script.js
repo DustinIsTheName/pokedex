@@ -113,50 +113,40 @@
 		var columns = 10;
 		var mines = 15;
 		var minesLeft = mines;
-		var column1 = [0,0,0,0,0,0,0,0,0,0];
-		var column2 = [0,0,0,0,0,0,0,0,0,0];
-		var column3 = [0,0,0,0,0,0,0,0,0,0];
-		var column4 = [0,0,0,0,0,0,0,0,0,0];
-		var column5 = [0,0,0,0,0,0,0,0,0,0];
-		var column6 = [0,0,0,0,0,0,0,0,0,0];
-		var column7 = [0,0,0,0,0,0,0,0,0,0];
-		var column8 = [0,0,0,0,0,0,0,0,0,0];
-		var column9 = [0,0,0,0,0,0,0,0,0,0];
-		var column10 = [0,0,0,0,0,0,0,0,0,0];
 		var mineField = [];
-		mineField[0] = column1;
-		mineField[1] = column2;
-		mineField[2] = column3;
-		mineField[3] = column4;
-		mineField[4] = column5;
-		mineField[5] = column6;
-		mineField[6] = column7;
-		mineField[7] = column8;
-		mineField[8] = column9;
-		mineField[9] = column10;
+		mineField[0] = [0,0,0,0,0,0,0,0,0,0];
+		mineField[1] = [0,0,0,0,0,0,0,0,0,0];
+		mineField[2] = [0,0,0,0,0,0,0,0,0,0];
+		mineField[3] = [0,0,0,0,0,0,0,0,0,0];
+		mineField[4] = [0,0,0,0,0,0,0,0,0,0];
+		mineField[5] = [0,0,0,0,0,0,0,0,0,0];
+		mineField[6] = [0,0,0,0,0,0,0,0,0,0];
+		mineField[7] = [0,0,0,0,0,0,0,0,0,0];
+		mineField[8] = [0,0,0,0,0,0,0,0,0,0];
+		mineField[9] = [0,0,0,0,0,0,0,0,0,0];
 
 		function setMines() { //determine the mine placement
 			var count = 0; //counts # of mines placed
-			for (i = 0; i < rows; i++) {
-				for (t = 0; t < columns; t++) {
+			for (i = 0; i < columns; i++) {
+				for (t = 0; t < rows; t++) {
 					mineField[i][t] = 0; //resets the field
 				}
 			}
 			while (count < mines) { //adds 15 random mines
-				i = Math.floor(Math.random()*rows); 
-				t = Math.floor(Math.random()*columns);
+				i = Math.floor(Math.random()*columns); 
+				t = Math.floor(Math.random()*rows);
 				if (mineField[i][t] != -1) {
 					mineField[i][t] = -1;
 					count++;
 				}
 			}
-			for (i = 0; i < rows; i++) { //assgins numbers to square according to surrounding mines
-				for (t = 0; t < columns; t++) {
+			for (i = 0; i < columns; i++) { //assgins numbers to square according to surrounding mines
+				for (t = 0; t < rows; t++) {
 					var countAgain = 0;
 					if (mineField[i][t] != -1) {
 						for (var a = -1; a <=1; a++) {
 							for (var b = -1; b <= 1; b++) {
-								if((i+a)>=0 && (i+a)<rows && (t+b)>=0 && (t+b)<columns) {
+								if((i+a)>=0 && (i+a)<columns && (t+b)>=0 && (t+b)<rows) {
 									if (mineField[i+a][t+b] === -1) {
 										countAgain++;
 									}
@@ -175,17 +165,34 @@
 			rows = $('#rows').val();
 			columns = $('#columns').val();
 			mines = $('#mines').val();
+			mineField = [];
+			for (i = 0; i < columns; i++) {
+				mineField[i] = [];
+				for (t = 0; t < rows; t++) {
+					mineField[i][t] = 0;
+				}
+			}
+			$('.mine-field-inner').empty();
+			for (i=0; i < rows*columns; i++) {
+				$('.mine-field-inner').append('<div class="mine"><div class="inner"></div></div>');
+			}
+			$('.mine').css('padding', 50/columns+'%');
+			var mineHeight = 921*((100/columns)/100);
+			$('.mine-field').height(mineHeight*rows+30);
+			$('.mine-field-inner').css('height', (mineHeight*rows+10)+'px');
+			$('.inner').css('padding-top', mineHeight*.369+'px');
+			console.log('mineHeight: '+mineHeight);
 			resetFire();
 		});
 
-		$('.mine').click(function() {
+		$('.mine-field-inner').on('click', '.mine', function() {
 			var thisMine = $(this);
 			var victoryLost = false;
 			if (victoryFire === 'play') {
 				if (flagTrigger === false && thisMine.hasClass('flag') === false) {									
 					var getMinePosition = function() {
-						for (i = 0; i < rows; i++) {
-							for (t = 0; t < columns; t++) {
+						for (i = 0; i < columns; i++) {
+							for (t = 0; t < rows; t++) {
 								if (thisMine.is('.mine:nth-child('+((i+1)+(t*columns))+')')) {
 									return [i,t];
 								}
@@ -200,12 +207,12 @@
 					}
 					firstClick = false;
 					function setOff(x,y) {
-						if ($('.mine:nth-child('+((x+1)+(y*10))+')').hasClass('flag') === false) {
+						if ($('.mine:nth-child('+((x+1)+(y*columns))+')').hasClass('flag') === false) {
 							switch (mineField[x][y]) {
 								case -1:
 									victoryLost = true;						
-									for (i = 0; i < rows; i++) {
-										for (t = 0; t < columns; t++) {
+									for (i = 0; i < columns; i++) {
+										for (t = 0; t < rows; t++) {
 											if (mineField[i][t] === -1) {
 												$('.mine:nth-child('+((i+1)+(t*columns))+')').addClass('boom');
 											}
@@ -218,7 +225,7 @@
 									mineField[x][y] = -2;
 									for (var a = -1; a <= 1; a++) {
 										for (var b = -1; b <= 1; b++) {
-											if ((x+a)>=0 && (x+a)<rows && (y+b)>=0 && (y+b)<columns) {
+											if ((x+a)>=0 && (x+a)<columns && (y+b)>=0 && (y+b)<rows) {
 												setOff(x+a,y+b); //sets off all surrounding spaces
 											}
 										}
@@ -275,18 +282,18 @@
 			}
 			var checkForVictory = function() {
 				var victoryCount = 0;
-				for(i = 0; i < rows; i++) {
-					for (t = 0; t < columns; t++) {
+				for(i = 0; i < columns; i++) {
+					for (t = 0; t < rows; t++) {
 						if (mineField[i][t] === -2) {
 							victoryCount++
 						}
 					}
 				}
-				if (victoryCount >= rows*columns-mines) {
+				if (victoryCount >= (rows*columns)-mines) {
 					victoryFire = "won";
 					$('.mine-count').text('It\'s safe now!');
-					for(i = 0; i < rows; i++) {
-						for (t = 0; t < columns; t++) {
+					for(i = 0; i < columns; i++) {
+						for (t = 0; t < rows; t++) {
 							if (mineField[i][t] === -1) {
 								$('.mine:nth-child('+((i+1)+(t*columns))+')').css('background-color',"#00f700");
 							}
