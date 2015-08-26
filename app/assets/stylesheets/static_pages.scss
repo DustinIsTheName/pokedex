@@ -10,6 +10,7 @@
 	.input-row{
 		display: block;
 		margin: 0 0 10px;
+		position: relative;
 		label {
 			display: inline-block;
 			margin: 4px 0 0;
@@ -19,6 +20,12 @@
 			width: 35px;
 			margin: 0;
 			float: right;
+		}
+		.error {
+			position: absolute;
+	    top: 4px;
+	    left: -60px;
+	    color: red;
 		}
 	}
 }

@@ -160,29 +160,63 @@
 		} //end setMines()
 		setMines();
 
-		$('#changeField').click(function(e) {
-			e.preventDefault;
+		$('#changeField').click(function() {
+			var errorRows = [false, 'low'];
+			var errorColumns = [false, 'low'];
+			var errorMines = [false, 'low'];
+			$('.error').remove();
 			rows = $('#rows').val();
 			columns = $('#columns').val();
 			mines = $('#mines').val();
-			mineField = [];
-			for (i = 0; i < columns; i++) {
-				mineField[i] = [];
-				for (t = 0; t < rows; t++) {
-					mineField[i][t] = 0;
+			if (rows<=0) {
+				errorRows = [true, 'low'];
+			}
+			if (rows>=21) {
+				errorRows = [true, 'high'];
+			}
+			if (columns<=0) {
+				errorColumns = [true, 'low'];
+			}
+			if (columns>=21) {
+				errorColumns = [true, 'high'];
+			}
+			if (mines<=0) {
+				errorMines = [true, 'low'];
+			}
+			if (mines>=rows*columns) {
+				errorMines = [true, 'high'];
+			}
+			if (errorRows[0]) {
+				$('.input-row.rows').append('<div class="error">too '+errorRows[1]+'</div>');
+			}
+			if (errorColumns[0]) {
+				$('.input-row.columns').append('<div class="error">too '+errorColumns[1]+'</div>');
+			}
+			if (errorMines[0]) {
+				$('.input-row.mines').append('<div class="error">too '+errorMines[1]+'</div>');
+			}
+
+			if (!errorRows[0] && !errorColumns[0] && !errorMines[0]) {
+				mineField = [];
+				for (i = 0; i < columns; i++) {
+					mineField[i] = [];
+					for (t = 0; t < rows; t++) {
+						mineField[i][t] = 0;
+					}
 				}
+				$('.mine-field-inner').empty();
+				for (i=0; i < rows*columns; i++) {
+					$('.mine-field-inner').append('<div class="mine"><div class="inner"></div></div>');
+				}
+				$('.mine').css('padding', 50/columns+'%');
+				var mineHeight = 920.938*((100/columns)/100);
+				$('.mine-field').height(mineHeight*rows+30);
+				$('.mine-field-inner').css('height', (mineHeight*rows+10)+'px');
+				$('.inner').css('padding-top', mineHeight*.369+'px');
+				console.log('mineHeight: '+mineHeight);
+				console.log('width: '+100/columns);
+				resetFire();
 			}
-			$('.mine-field-inner').empty();
-			for (i=0; i < rows*columns; i++) {
-				$('.mine-field-inner').append('<div class="mine"><div class="inner"></div></div>');
-			}
-			$('.mine').css('padding', 50/columns+'%');
-			var mineHeight = 921*((100/columns)/100);
-			$('.mine-field').height(mineHeight*rows+30);
-			$('.mine-field-inner').css('height', (mineHeight*rows+10)+'px');
-			$('.inner').css('padding-top', mineHeight*.369+'px');
-			console.log('mineHeight: '+mineHeight);
-			resetFire();
 		});
 
 		$('.mine-field-inner').on('click', '.mine', function() {
