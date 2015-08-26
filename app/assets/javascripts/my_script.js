@@ -165,25 +165,25 @@
 			var errorColumns = [false, 'low'];
 			var errorMines = [false, 'low'];
 			$('.error').remove();
-			rows = $('#rows').val();
-			columns = $('#columns').val();
-			mines = $('#mines').val();
-			if (rows<=0) {
+			checkRows = $('#rows').val();
+			checkColumns = $('#columns').val();
+			checkMines = $('#mines').val();
+			if (checkRows<=0) {
 				errorRows = [true, 'low'];
 			}
-			if (rows>=21) {
+			if (checkRows>=21) {
 				errorRows = [true, 'high'];
 			}
-			if (columns<=0) {
+			if (checkColumns<=0) {
 				errorColumns = [true, 'low'];
 			}
-			if (columns>=21) {
+			if (checkColumns>=21) {
 				errorColumns = [true, 'high'];
 			}
-			if (mines<=0) {
+			if (checkMines<=0) {
 				errorMines = [true, 'low'];
 			}
-			if (mines>=rows*columns) {
+			if (checkMines>=checkRows*checkColumns) {
 				errorMines = [true, 'high'];
 			}
 			if (errorRows[0]) {
@@ -197,6 +197,9 @@
 			}
 
 			if (!errorRows[0] && !errorColumns[0] && !errorMines[0]) {
+				rows = checkRows;
+				columns = checkColumns;
+				mines = checkMines;
 				mineField = [];
 				for (i = 0; i < columns; i++) {
 					mineField[i] = [];
