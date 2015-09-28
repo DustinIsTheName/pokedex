@@ -1,5 +1,21 @@
 Rails.application.routes.draw do
 
+  get 'users/index'
+
+  get 'users/show'
+
+  get 'users/new'
+
+  get 'users/create'
+
+  get 'users/edit'
+
+  get 'users/update'
+
+  get 'users/destroy'
+
+  get 'users/resources'
+
   root 'static_pages#home'
 
   get 'home' => 'static_pages#home'
@@ -11,6 +27,8 @@ Rails.application.routes.draw do
   get 'bio' => 'static_pages#bio'
 
   get 'minesweeper' => 'static_pages#minesweeper'
+
+  resources :users
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
