@@ -1,1 +1,14 @@
-<p>This is a form partial.</p>
+<%= form_for @user do |f| %>
+	<div><%= f.label :first_name %></div>
+	<div><%= f.text_field :first_name %></div>
+	<div><%= f.label :last_name %></div>
+	<div><%= f.text_field :last_name %></div>
+	<div><%= f.label :email %></div>
+	<div><%= f.text_field :email %></div>
+	<div><%= f.label :password %></div>
+	<div><%= f.password_field :password %></div>
+	<div><%= f.label :password_confirmation %></div>
+	<div><%= f.password_field :password_confirmation %></div>
+
+	<%= f.submit :go! %>
+<% end %>
