@@ -19,7 +19,7 @@ class UsersController < ApplicationController
       flash[:success] = "Welcome to the Pokedex!"
       redirect_to @user
     else
-      render @user
+      render 'new'
     end
 
   end
@@ -32,14 +32,14 @@ class UsersController < ApplicationController
 
     if @user.update_attributes(user_params)
       flash[:notice] = "Successfully updated..."
-      redirect_to edit_user_path
+      redirect_to @user
     else
-      render :show
+      render 'edit'
     end
   end
 
   def destroy
-
+    
   end
 
   private
