@@ -2,11 +2,26 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+    display: inline-block;
+    height: initial;
+    padding: initial;
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: inherit;
+    color: #555;
+    vertical-align: middle;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: initial;
+}
+
 .custom-field-form {
 	position: absolute;
 	top: 0;
 	right: 150px;
 	width: 135px;
+	z-index: 99;
 	.input-row{
 		display: block;
 		margin: 0 0 10px;
@@ -58,7 +73,7 @@
 			height: 50px;
 		  background: image-url('minesweeper-flag.png');
 		  background-size: 130%;
-      background-position: center 10px;
+      background-position: center 9px;
 		  border: 5px solid #ddd;
 		  border-right-color: #bbb;
 		  border-bottom-color: #bbb;
@@ -118,7 +133,7 @@
 			.inner {
 				width: 100%;
 				height: 100%;
-				padding-top: 34px;
+				padding-top: 10px;
 				box-sizing: border-box;
 				position: absolute;
 				top: 0;
